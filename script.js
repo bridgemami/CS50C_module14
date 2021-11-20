@@ -37,10 +37,12 @@ function preload ()
   this.load.image('water', 'assets/underwater.jpg');
   this.load.image('tree', 'assets/tree.png');
   this.load.image('grass', 'assets/grass.png');
-  this.load.image('ground', 'assets/platform.png');
+  //this.load.image('ground', 'assets/platform.png');
+  this.load.image('ground1', 'assets/desert_ground.jpg');
   this.load.image('snow', 'assets/snow_05.png');
   this.load.image('snow1', 'assets/snow_1.jpg');
-  this.load.image('fish', 'assets/fish.png');
+  this.load.image('snow2', 'assets/snow_half.png');
+  this.load.image('fish', 'assets/parrot3.png');
   this.load.image('bomb', 'assets/bomb.png');
   // spritesheet() takes 3 args: string nickname for the asset, filepath to file, frame dimension
   //this.load.spritesheet('dude', 'assets/dude.png', {frameWidth: 32, frameHeight: 48});
@@ -63,14 +65,14 @@ function create ()
   //physics
   platforms = this.physics.add.staticGroup();
  //ground, double in size
-  platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+  platforms.create(400, 568, 'ground1').setScale(2).refreshBody();
    //more bars
-   platforms.create(600, 500, 'snow');
-   platforms.create(50, 250, 'snow1');
-   platforms.create(700, 200, 'snow');
-   platforms.create(300, 400, 'snow');
-   platforms.create(500, 300, 'snow');
-   platforms.create(50, 500, 'snow');
+   //platforms.create(600, 500, 'snow1');
+   platforms.create(25, 250, 'snow1');
+   platforms.create(750, 200, 'snow1');
+   platforms.create(250, 400, 'snow2');
+   platforms.create(500, 300, 'snow2');
+   //platforms.create(50, 500, 'snow1');
    console.log("4. platforms done");
 // add another game object, this time a player-controlled object often called a sprite
     // to work with game objects in multiple stage of a scene, save a ref to obj in a global var
