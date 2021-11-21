@@ -8,11 +8,16 @@ var config = {
     width: 800,
     height: 600,
     // tell phaser engine how to find the blocks of code (functions) I am providing for the game
+    audio: {
+        disableWebAudio: true
+    },
     scene: {
         preload: preload,
         create: create,
         update: update
         },
+    title: 'The Tiny Penguin',
+    pixelArt: false,
     physics: {
       default: 'arcade',
       arcade: {
@@ -25,6 +30,7 @@ var config = {
 var player;
 var fishes;
 var platforms;
+var music;
 var cursors;
 var score = 0;
 var gameOver = false;
@@ -43,10 +49,15 @@ function preload ()
   this.load.image('snow1', 'assets/snow_1.jpg');
   this.load.image('snow2', 'assets/snow_half.png');
   this.load.image('fish', 'assets/parrot3.png');
-  this.load.image('bomb', 'assets/bomb.png');
+  this.load.image('shark', 'assets/shark_to_right.png');
+  this.load.image('sharkl', 'assets/shark_to_left.png');
   // spritesheet() takes 3 args: string nickname for the asset, filepath to file, frame dimension
-  //this.load.spritesheet('dude', 'assets/dude.png', {frameWidth: 32, frameHeight: 48});
   this.load.spritesheet('penguin', 'assets/penguin.png', {frameWidth: 24, frameHeight: 32});
+  //add music
+   this.load.audio('theme', [
+        'assets/sky_ogg.ogg',
+        'assets/sky_wav.wav'
+    ]);
   console.log("1. images done");
 }
 console.log("2. preload done");
@@ -62,6 +73,9 @@ function create ()
   //the fish image
   //this.add.image(400, 300, 'fish');
   console.log("3. add image done");
+  //music
+  music = this.sound.add('theme');
+  music.play();
   //physics
   platforms = this.physics.add.staticGroup();
  //ground, double in size
@@ -78,8 +92,8 @@ function create ()
     // to work with game objects in multiple stage of a scene, save a ref to obj in a global var
     // sprite() takes 3 args: x-coord, y-coord, asset nickname string
 player = this.physics.add.sprite(200, 450, 'penguin');
-//movement
-player.setBounce(0.2);
+//movement & change from .2 to .5
+player.setBounce(0.5);
 // ask the physics sim in the engine to prevent a game object from falling off screen
 player.setCollideWorldBounds(true);
 this.anims.create ({
@@ -99,6 +113,14 @@ this.anims.create({
   frameRate: 10,
   repeat: -1
 });
+this.anims.create ({
+  key: 'left',
+  frames : this.anims.generateFrameNumbers('sharkl'), 
+});
+this.anims.create({
+  key: 'right',
+  frames: this.anims.generateFrameNumbers('shark'), 
+});
 console.log("5. ani done");
 cursors= this.input.keyboard.createCursorKeys();
 //sprite on ground
@@ -112,19 +134,20 @@ console.log("7. keyboard");
   console.log("8. add fishes");
   fishes.children.iterate(function (child) {
     child.setBounceY(Phaser.Math.FloatBetween(0, 1));
-  console.log("9. add bounce & next bombs");
+  console.log("9. add bounce & next sharks");
   });
-  //bombs
-  bombs= this.physics.add.group();
-  //add score
-  scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000'});
-  //collide fishes, player and bombs
+  //sharks
+  sharks= this.physics.add.group();
+  //add score & change font
+  scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000', fontFamily:'sans-serif'});
+  
+  //collide fishes, player and sharks
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(fishes, platforms);
-  this.physics.add.collider(bombs, platforms);
+  this.physics.add.collider(sharks, platforms);
   //players overplaps of the fishes
   this.physics.add.overlap(player, fishes, collectFish, null, this);
-  this.physics.add.collider(player, bombs, hitBomb, null, this);
+  this.physics.add.collider(player, sharks, hitShark, null, this);
   }
 //}
 console.log("6. create done");
@@ -168,22 +191,15 @@ function collectFish(player, fish) {
         child.enableBody(true, child.x, 0, true, true);
       });
       var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-      var bomb = bombs.create(x, 16, 'bomb');
-      bomb.setBounce(1);
-      bomb.setCollideWorldBounds(true);
-      bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+      var shark = sharks.create(x, 16, 'shark');
+      shark.setBounce(1);
+      shark.setCollideWorldBounds(true);
+      shark.setVelocity(Phaser.Math.Between(-200, 200), 20);
     }
   }
-  function hitBomb (player, bomb) {
+  function hitShark (player, shark) {
     this.physics.pause();
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
   }
-
-  
-  
- 
-  
-  
-  
