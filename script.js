@@ -133,7 +133,7 @@ console.log("7. keyboard");
   sharks= this.physics.add.group();
   //add score & change font
   scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000', fontFamily:'sans-serif'});
-  scoreTitle = this.add.text(250, 0, 'Welcome to the Ocean', { fontSize: '36px', fill: '#191970',  fontFamily: 'serif' });
+  scoreTitle = this.add.text(400, 0, 'Welcome to the Ocean', { fontSize: '48px', fill: '#191970',  fontFamily: 'serif' });
   //collide fishes, player and sharks
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(fishes, platforms);
