@@ -94,7 +94,7 @@ function create ()
     // sprite() takes 3 args: x-coord, y-coord, asset nickname string
 player = this.physics.add.sprite(200, 450, 'penguin');
 //movement & change from .2 to .5
-player.setBounce(0.5);
+player.setBounce(0.1);
 // ask the physics sim in the engine to prevent a game object from falling off screen
 player.setCollideWorldBounds(true);
 this.anims.create ({
@@ -120,7 +120,7 @@ cursors= this.input.keyboard.createCursorKeys();
 console.log("7. keyboard");
   fishes = this.physics.add.group({
     key: 'fish',
-    repeat: 7,
+    repeat: 8,
     //setScale: 0.25,
     setXY: { x: 40, y: 0, stepX: 100}
   });
@@ -132,8 +132,8 @@ console.log("7. keyboard");
   //sharks
   sharks= this.physics.add.group();
   //add score & change font
-  scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000', fontFamily:'sans-serif'});
-  scoreTitle = this.add.text(400, 0, 'Welcome to the Ocean', { fontSize: '48px', fill: '#191970',  fontFamily: 'serif' });
+  scoreText = this.add.text(16, 16, 'Score:  0', { fontSize: '32px', fill: '#000', fontFamily:'sans-serif'});
+  scoreTitle = this.add.text(250, 0, 'Welcome to the Ocean', { fontSize: '36px', fill: '#191970',  fontFamily: 'serif' });
   //collide fishes, player and sharks
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(fishes, platforms);
@@ -154,11 +154,11 @@ function update ()
   //cursors = this.input.keyboard.createCursorKeys();
   //check left and right arrow keys
 if (cursors.left.isDown){
-  player.setVelocityX(-160);
+  player.setVelocityX(-100);
   player.anims.play('left', true);
 }
 else if (cursors.right.isDown) {
-  player.setVelocityX(160);
+  player.setVelocityX(100);
   player.anims.play('right', true);}
   else {
     player.setVelocityX(0);
@@ -184,7 +184,7 @@ function collectFish(player, fish) {
         child.enableBody(true, child.x, 0, true, true);
       });
       var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-      var shark = sharks.create(x, 16, 'shark');
+      var shark = sharks.create(x, 16, 'shark', 'sharkl');
       shark.setBounce(1);
       shark.setCollideWorldBounds(true);
       shark.setVelocity(Phaser.Math.Between(-200, 200), 20);
