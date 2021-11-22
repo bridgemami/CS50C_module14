@@ -35,6 +35,7 @@ var cursors;
 var score = 0;
 var gameOver = false;
 var scoreText;
+var titleText;
 var game = new Phaser.Game(config);
 // step 3. PRELOAD the phaser library runs our function for preload to load all the images and audio for the game
 function preload ()
@@ -113,14 +114,6 @@ this.anims.create({
   frameRate: 10,
   repeat: -1
 });
-this.anims.create ({
-  key: 'left',
-  frames : this.anims.generateFrameNumbers('sharkl'), 
-});
-this.anims.create({
-  key: 'right',
-  frames: this.anims.generateFrameNumbers('shark'), 
-});
 console.log("5. ani done");
 cursors= this.input.keyboard.createCursorKeys();
 //sprite on ground
@@ -140,7 +133,7 @@ console.log("7. keyboard");
   sharks= this.physics.add.group();
   //add score & change font
   scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000', fontFamily:'sans-serif'});
-  
+  scoreTitle = this.add.text(400, 0, 'Welcome to the Ocean', { fontSize: '48px', fill: '#191970',  fontFamily: 'serif' });
   //collide fishes, player and sharks
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(fishes, platforms);
