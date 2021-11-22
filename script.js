@@ -94,7 +94,7 @@ function create ()
     // sprite() takes 3 args: x-coord, y-coord, asset nickname string
 player = this.physics.add.sprite(200, 450, 'penguin');
 //movement & change from .2 to .5
-player.setBounce(0.5);
+player.setBounce(1);
 // ask the physics sim in the engine to prevent a game object from falling off screen
 player.setCollideWorldBounds(true);
 this.anims.create ({
@@ -192,7 +192,7 @@ function collectFish(player, fish) {
   }
   function hitShark (player, shark) {
     this.physics.pause();
-    player.setTint(0xff0000);
+    player.setTint(0x8b0000);
     player.anims.play('turn');
     gameOver = true;
   }
